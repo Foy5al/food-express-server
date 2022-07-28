@@ -49,6 +49,26 @@ async function run() {
             res.json(result);
         })
 
+        //put / update api
+        app.put('/add/menu:id', async (req, res) => {
+            const id = req.params.id;
+            const parts = req.body;
+            const filter = { _id: ObjectId(id) };
+            const updateDoc = {
+                $set: parts,
+            };
+            const result = await foodieExpCollection.updateOne(filter, updateDoc);
+            res.json(result);
+        })
+
+        //add product with key and get them 
+        app.post('/foods/usekeys', async (req, res) => {
+            const keys = req.body;
+            const query = { key: { $in: keys } }
+            const products = await foodieExpCollection.find(query).toArray();
+            res.send(products);
+        })
+
         //delete api
         app.delete('/deleteshop/:id', async (req, res) => {
             const id = req.params.id;
@@ -57,6 +77,21 @@ async function run() {
             const del = await foodieExpCollection.deleteOne(query);
             res.json(del);
 
+        })
+
+        //add product with key and get them 
+        app.post('/products/usekeys', async (req, res) => {
+            const keys = req.body;
+            const query = { key: { $in: keys } }
+            const products = await foodieExpCollection.find(query).toArray();
+            res.send(products);
+        })
+
+        // order api
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.json(result)
         })
     }
     finally {
