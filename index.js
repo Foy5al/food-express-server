@@ -24,6 +24,7 @@ async function run() {
         const database = client.db('foodieExpress');
         const foodieExpCollection = database.collection('foodieExpressCollection');
         const orderCollection = database.collection('orders');
+        const menuCollection = database.collection('menuCollection');
 
         //get restaurant api 
         app.get('/shops', async (req, res) => {
@@ -49,17 +50,27 @@ async function run() {
             res.json(result);
         })
 
+        //post menu
+        app.post('/add/menu/:id', async (req, res) => {
+            const menu = req.body;
+            const result = await menuCollection.insertOne(menu);
+            console.log(`A service is inserted with the id: ${result.insertedId}`);
+            res.json(result);
+        })
+
         //put / update api
-        app.put('/add/menu:id', async (req, res) => {
+        /* app.post('/add/menu/:id', async (req, res) => {
             const id = req.params.id;
-            const parts = req.body;
-            const filter = { _id: ObjectId(id) };
+            const menu = req.body;
+            console.log(id, parts)
+             const filter = { _id: ObjectId(id) };
             const updateDoc = {
                 $set: parts,
             };
-            const result = await foodieExpCollection.updateOne(filter, updateDoc);
+            const result = await menuCollection.updateOne(filter, updateDoc);
             res.json(result);
-        })
+            res.json('working')
+        }) */
 
         //add product with key and get them 
         app.post('/foods/usekeys', async (req, res) => {
