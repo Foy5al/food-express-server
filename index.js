@@ -112,10 +112,10 @@ async function run() {
         })
 
         //add product with key and get them 
-        app.post('/products/usekeys', async (req, res) => {
+        app.post('/foods/ids', async (req, res) => {
             const keys = req.body;
             const query = { key: { $in: keys } }
-            const products = await foodieExpCollection.find(query).toArray();
+            const products = await orderCollection.find(query).toArray();
             res.send(products);
         })
 
