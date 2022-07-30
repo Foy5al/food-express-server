@@ -52,7 +52,7 @@ async function run() {
         })
 
         //post menu
-        app.post('/add/menu/:id', async (req, res) => {
+        app.post('/add/menu/:name', async (req, res) => {
             const menu = req.body;
             const result = await menuCollection.insertOne(menu);
             console.log(`A service is inserted with the id: ${result.insertedId}`);
@@ -64,8 +64,19 @@ async function run() {
             const name = req.params.name;
             console.log(name)
             const query = { shopName: name };
-            const service = await menuCollection.filter(query);
+            const cursor = await menuCollection.find(query);
+            const service = await cursor.toArray();
+            console.log(service);
             res.json(service);
+        })
+
+        //find all menu
+        app.get('/menus', async (req, res) => {
+            console.log('this is working')
+            const cursor = menuCollection.find({});
+            const shops = await cursor.toArray();
+            res.send(shops);
+
         })
 
         //put / update api
