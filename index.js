@@ -28,6 +28,7 @@ async function run() {
 
         //get restaurant api 
         app.get('/shops', async (req, res) => {
+            console.log('this is working')
             const cursor = foodieExpCollection.find({});
             const shops = await cursor.toArray();
             res.send(shops);
@@ -35,9 +36,9 @@ async function run() {
         })
 
         //get single service
-        app.get('/shop/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
+        app.get('/shop/:name', async (req, res) => {
+            const name = req.params.name;
+            const query = { resturent_name: name };
             const service = await foodieExpCollection.findOne(query);
             res.json(service);
         })
@@ -56,6 +57,15 @@ async function run() {
             const result = await menuCollection.insertOne(menu);
             console.log(`A service is inserted with the id: ${result.insertedId}`);
             res.json(result);
+        })
+
+        //get shop menu
+        app.get('/shop/menu/:name', async (req, res) => {
+            const name = req.params.name;
+            console.log(name)
+            const query = { shopName: name };
+            const service = await menuCollection.filter(query);
+            res.json(service);
         })
 
         //put / update api
