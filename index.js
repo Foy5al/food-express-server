@@ -103,6 +103,16 @@ async function run() {
             const result = await orderCollection.insertOne(order);
             res.json(result)
         })
+
+        //order shop api
+        app.delete('/deleteshop/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const query = { _id: ObjectId(id) };
+            const del = await orderCollection.deleteOne(query);
+            res.json(del);
+
+        })
     }
     finally {
         // await client.close();
