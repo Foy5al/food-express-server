@@ -81,10 +81,10 @@ async function run() {
 
 
         //delete shop api
-        app.delete('/deleteshop/:id', async (req, res) => {
-            const id = req.params.id;
-            console.log(id);
-            const query = { _id: ObjectId(id) };
+        app.delete('/deleteshop/:name', async (req, res) => {
+            const name = req.params.name;
+            console.log(name);
+            const query = { resturent_name: name };
             const del = await foodieExpCollection.deleteOne(query);
             res.json(del);
 
