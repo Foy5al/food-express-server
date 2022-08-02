@@ -105,7 +105,7 @@ async function run() {
         })
 
         //order shop api
-        app.delete('/deleteshop/:id', async (req, res) => {
+        app.delete('/delete/order/:id', async (req, res) => {
             const id = req.params.id;
             console.log(id);
             const query = { _id: ObjectId(id) };
