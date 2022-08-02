@@ -47,7 +47,7 @@ async function run() {
         app.post('/add/shop', async (req, res) => {
             const service = req.body;
             const result = await foodieExpCollection.insertOne(service);
-            console.log(`A service is inserted with the id: ${result.insertedId}`);
+            console.log(`A new shop is inserted with the id: ${result.insertedId}`);
             res.json(result);
         })
 
@@ -79,29 +79,8 @@ async function run() {
 
         })
 
-        //put / update api
-        /* app.post('/add/menu/:id', async (req, res) => {
-            const id = req.params.id;
-            const menu = req.body;
-            console.log(id, parts)
-             const filter = { _id: ObjectId(id) };
-            const updateDoc = {
-                $set: parts,
-            };
-            const result = await menuCollection.updateOne(filter, updateDoc);
-            res.json(result);
-            res.json('working')
-        }) */
 
-        //add product with key and get them 
-        app.post('/foods/usekeys', async (req, res) => {
-            const keys = req.body;
-            const query = { key: { $in: keys } }
-            const products = await foodieExpCollection.find(query).toArray();
-            res.send(products);
-        })
-
-        //delete api
+        //delete shop api
         app.delete('/deleteshop/:id', async (req, res) => {
             const id = req.params.id;
             console.log(id);
@@ -111,14 +90,13 @@ async function run() {
 
         })
 
-        //add product with key and get them 
-        app.post('/foods/ids', async (req, res) => {
-            const keys = req.body;
-            const query = { key: { $in: keys } }
-            const products = await orderCollection.find(query).toArray();
-            res.send(products);
-        })
+        //get order api 
+        app.get('/all/orders', async (req, res) => {
+            const cursor = orderCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);
 
+        })
         // order api
         app.post('/orders', async (req, res) => {
             const order = req.body;
