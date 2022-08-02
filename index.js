@@ -104,6 +104,14 @@ async function run() {
             res.json(result)
         })
 
+        //get single mail order
+        app.get('/my/orders/:email', async (req, res) => {
+            const mail = req.params.name;
+            const query = { email: mail };
+            const service = await orderCollection.findOne(query);
+            res.json(service);
+        })
+
         //order shop api
         app.delete('/delete/order/:id', async (req, res) => {
             const id = req.params.id;
