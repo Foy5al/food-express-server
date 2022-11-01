@@ -120,7 +120,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', async (req, res) => {
-    res.send('Foodie Express server is alive');
+    res.send('Foodie Express server is a');
 })
 
 app.listen(port, () => {
