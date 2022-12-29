@@ -68,7 +68,6 @@ async function run() {
       const query = { shopName: name };
       const cursor = await menuCollection.find(query);
       const service = await cursor.toArray();
-      console.log(service);
       res.json(service);
     });
 
@@ -83,7 +82,6 @@ async function run() {
     //delete shop api
     app.delete("/deleteshop/:name", async (req, res) => {
       const name = req.params.name;
-      console.log(name);
       const query = { resturent_name: name };
       const del = await foodieExpCollection.deleteOne(query);
       res.json(del);

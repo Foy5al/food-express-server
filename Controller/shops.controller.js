@@ -2,8 +2,14 @@ const {
   getShopsInfo,
   postShopsInfo,
   getShopByNameInfo,
+  deleteShopInfo,
 } = require("../Services/shops.service");
-const { getMenusInfo, addMenusInfo } = require("../Services/menu.service");
+const {
+  getMenusInfo,
+  addMenusInfo,
+  getMenusByShopNameInfo,
+  deleteMenusInfo,
+} = require("../Services/menu.service");
 
 exports.getShops = async (req, res, next) => {
   try {
@@ -50,6 +56,21 @@ exports.getShopByName = async (req, res, next) => {
     });
   }
 };
+exports.deleteShop = async (req, res, next) => {
+  try {
+    const result = await deleteShopInfo(req.params.id);
+    res.status(200).json({
+      status: "success",
+      message: "Shop deleted successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "Error",
+      message: "Shop can't be deleted an error occurred",
+    });
+  }
+};
 exports.getMenus = async (req, res, next) => {
   try {
     const result = await getMenusInfo();
@@ -77,6 +98,36 @@ exports.addMenus = async (req, res, next) => {
     res.status(400).json({
       status: "Error",
       message: "Menus data is not added an error occurred",
+    });
+  }
+};
+exports.deleteMenu = async (req, res, next) => {
+  try {
+    const result = await deleteMenusInfo(req.params.id);
+    res.status(200).json({
+      status: "success",
+      message: "Menus data added successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "Error",
+      message: "Menus data is not added an error occurred",
+    });
+  }
+};
+exports.getMenusByShopName = async (req, res, next) => {
+  try {
+    const result = await getMenusByShopNameInfo(req.params.name);
+    res.status(200).json({
+      status: "success",
+      message: "Shop Menus data fetched successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "Error",
+      message: "Shop Menus data is not fetched an error occurred",
     });
   }
 };

@@ -8,6 +8,7 @@ app.use(express.json());
 
 //routes
 const shopsRoute = require("./Routes/v1/shops.route");
+const ordersRoute = require("./Routes/v1/orders.router");
 /* 
 this is existing routes 
 /shops  > get restaurant
@@ -32,6 +33,7 @@ orders/order/ > get,add,del
 */
 
 app.use("/shops", shopsRoute);
+app.use("/orders", ordersRoute);
 
 app.get("/", (req, res) => {
   res.send(`Food Express Server is Alive :D`);
