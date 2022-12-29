@@ -3,6 +3,7 @@ const {
   postShopsInfo,
   getShopByNameInfo,
 } = require("../Services/shops.service");
+const { getMenusInfo, addMenusInfo } = require("../Services/menu.service");
 
 exports.getShops = async (req, res, next) => {
   try {
@@ -46,6 +47,36 @@ exports.getShopByName = async (req, res, next) => {
     res.status(400).json({
       status: "Error",
       message: "Shop data is not fetched an error occurred",
+    });
+  }
+};
+exports.getMenus = async (req, res, next) => {
+  try {
+    const result = await getMenusInfo();
+    res.status(200).json({
+      status: "success",
+      message: "All Menus data fetched successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "Error",
+      message: "All Menus data is not fetched an error occurred",
+    });
+  }
+};
+exports.addMenus = async (req, res, next) => {
+  try {
+    const result = await addMenusInfo(req.body);
+    res.status(200).json({
+      status: "success",
+      message: "Menus data added successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "Error",
+      message: "Menus data is not added an error occurred",
     });
   }
 };
